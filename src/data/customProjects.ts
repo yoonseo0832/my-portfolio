@@ -13,5 +13,7 @@ export const customProjects: ProjectItem[] = [
     forks: 0,
     updatedAt: "2025-02-20T00:00:00.000Z",
     source: "custom",
+    platform: "github",
+    platformLabel: "GitHub",
   },
 ];

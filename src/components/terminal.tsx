@@ -19,6 +19,7 @@ export default function Terminal() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [command, setCommand] = useState("");
   const [open, setOpen] = useState(true);
+  const [height, setHeight] = useState(180);
   const [history, setHistory] = useState([
     "Welcome to yoonseo-portfolio terminal.",
     "Type '/help' to see available commands.",
@@ -54,6 +55,20 @@ export default function Terminal() {
         `command not found: ${value}. Type '/help' for available commands.`,
       ]);
   }
+  function startResize(event: React.PointerEvent<HTMLDivElement>) {
+    event.preventDefault();
+    const startY = event.clientY;
+    const startHeight = height;
+    const move = (moveEvent: PointerEvent) => {
+      setHeight(Math.min(520, Math.max(110, startHeight - (moveEvent.clientY - startY))));
+    };
+    const stop = () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", stop);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", stop);
+  }
   if (!open)
     return (
       <div className="terminal-collapsed">
@@ -67,8 +82,10 @@ export default function Terminal() {
   return (
     <section
       className="terminal-panel"
+      style={{ height, flexBasis: height }}
       onClick={() => inputRef.current?.focus()}
     >
+      <div className="terminal-resize-handle" onPointerDown={startResize} title="Drag to resize terminal" />
       <div className="terminal-header">
         <span>TERMINAL</span>
         <span>zsh</span>

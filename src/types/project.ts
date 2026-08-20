@@ -9,4 +9,6 @@ export interface ProjectItem {
   forks: number;
   updatedAt: string;
   source: "github" | "custom";
+  platform?: string;
+  platformLabel?: string;
 }

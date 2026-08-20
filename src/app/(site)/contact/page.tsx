@@ -1,7 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const contactMarkdown = `# Let&apos;s talk.
+export const contactMarkdown = `# Let&apos;s talk.
 
 > 좋은 아이디어는 좋은 대화에서 시작됩니다.
 
@@ -25,13 +25,15 @@ echo "Looking forward to hearing from you"
 ~~~
 `;
 
-export default function Contact() {
+export default async function Contact() {
+  let content = contactMarkdown;
+  try { const { getSupabase } = await import("@/lib/supabase"); const { data } = await getSupabase().from("site_content").select("content").eq("key", "contact").maybeSingle(); content = data?.content || contactMarkdown; } catch {}
   return (
     <article className="about-page">
       <div className="markdown-content">
         <p className="syntax-comment">{'// latest-contact.information'}</p>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {contactMarkdown}
+          {content}
         </ReactMarkdown>
       </div>
     </article>

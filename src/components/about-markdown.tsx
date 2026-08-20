@@ -43,11 +43,17 @@ const currentFocus = ["accessible UI", "design systems", "web performance"];
 [View my projects →](/projects) · [Get in touch →](/contact)
 `;
 
-export default function AboutMarkdown() {
-  return (
-    <div className="markdown-content">
-      <p className="syntax-comment">{'// latest-intro.myself'}</p>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{aboutMarkdown}</ReactMarkdown>
-    </div>
-  );
+export async function getAboutMarkdown() {
+  try {
+    const { getSupabase } = await import("@/lib/supabase");
+    const { data } = await getSupabase().from("site_content").select("content").eq("key", "about").maybeSingle();
+    return data?.content || aboutMarkdown;
+  } catch {
+    return aboutMarkdown;
+  }
+}
+
+export default async function AboutMarkdown() {
+  const content = await getAboutMarkdown();
+  return <div className="markdown-content"><p className="syntax-comment">{'// latest-intro.myself'}</p><ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown></div>;
 }
