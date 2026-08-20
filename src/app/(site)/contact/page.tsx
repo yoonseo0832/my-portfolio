@@ -29,7 +29,7 @@ export default async function Contact() {
   let content = contactMarkdown;
   try { const { getSupabase } = await import("@/lib/supabase"); const { data } = await getSupabase().from("site_content").select("content").eq("key", "contact").maybeSingle(); content = data?.content || contactMarkdown; } catch {}
   return (
-    <article className="about-page">
+    <article className="about-page contact-page">
       <div className="markdown-content">
         <p className="syntax-comment">{'// latest-contact.information'}</p>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
