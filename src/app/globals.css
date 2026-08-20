@@ -876,9 +876,7 @@
   color: #dcdcaa;
   font-size: 18px;
 }
-.markdown-content p {
-  margin: 14px 0;
-}
+
 .markdown-content blockquote {
   margin: 18px 0;
   padding: 8px 18px;
@@ -1193,3 +1191,24 @@
   font-size: 12px;
   margin-left: 4px;
 }
+.projects-page,
+.blog-page,
+.about-page {
+  width: 100%;
+  max-width: 1100px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 8vh 7vw 10vh;
+}
+.projects-page,
+.blog-page {
+  display: block;
+}
+.about-page {
+  display: block;
+}
+.about-page .markdown-content {
+  width: 100%;
+  max-width: 760px;
+}
+.projects-heading h1,.blog-heading h1,.markdown-content h1{margin:16px 0 8px;color:#dcdcaa;font-size:clamp(38px,6vw,62px);letter-spacing:-.06em;line-height:1.15}.projects-heading .syntax-comment,.blog-heading .syntax-comment,.markdown-content>.syntax-comment{margin:14px 0;color:#6a9955}
