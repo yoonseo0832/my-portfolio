@@ -35,6 +35,7 @@ const files: SidebarFile[] = [
     icon: "{}",
     color: "#cbcb41",
   },
+  { name: "gallery.assets", href: "/gallery", key: "gallery", icon: "▧", color: "#c586c0" },
   {
     name: "tistory.rss",
     href: "/blog",
