@@ -3,9 +3,143 @@ import { useEffect, useState } from "react";
 type ImageItem = { color: string; label: string };
 type Item = { title: string; description: string; images: ImageItem[] };
 const items: Item[] = [
-  { title: "VS Code Portfolio", description: "A developer portfolio interface inspired by a familiar editor workspace.", images: [{ color: "#163c52", label: "portfolio / overview" }, { color: "#244b3b", label: "portfolio / projects" }, { color: "#3d2e55", label: "portfolio / admin" }, { color: "#553b27", label: "portfolio / gallery" }, { color: "#4a293f", label: "portfolio / mobile" }] },
-  { title: "Project Dashboard", description: "A clean project management experience for organizing shipped work.", images: [{ color: "#3d2e55", label: "dashboard / overview" }, { color: "#553b27", label: "dashboard / detail" }] },
-  { title: "Mobile Interface", description: "An accessible mobile-first interface focused on clear interactions.", images: [{ color: "#244b3b", label: "mobile-ui / home" }, { color: "#4a293f", label: "mobile-ui / profile" }] },
-  { title: "Design System", description: "Reusable components, tokens, and layout experiments.", images: [{ color: "#553b27", label: "system / tokens" }, { color: "#253d55", label: "system / components" }] },
+  {
+    title: "VS Code Portfolio",
+    description:
+      "A developer portfolio interface inspired by a familiar editor workspace.",
+    images: [
+      { color: "#163c52", label: "portfolio / overview" },
+      { color: "#244b3b", label: "portfolio / projects" },
+      { color: "#3d2e55", label: "portfolio / admin" },
+      { color: "#553b27", label: "portfolio / gallery" },
+      { color: "#4a293f", label: "portfolio / mobile" },
+    ],
+  },
+  {
+    title: "Project Dashboard",
+    description:
+      "A clean project management experience for organizing shipped work.",
+    images: [
+      { color: "#3d2e55", label: "dashboard / overview" },
+      { color: "#553b27", label: "dashboard / detail" },
+    ],
+  },
+  {
+    title: "Mobile Interface",
+    description:
+      "An accessible mobile-first interface focused on clear interactions.",
+    images: [
+      { color: "#244b3b", label: "mobile-ui / home" },
+      { color: "#4a293f", label: "mobile-ui / profile" },
+    ],
+  },
+  {
+    title: "Design System",
+    description: "Reusable components, tokens, and layout experiments.",
+    images: [
+      { color: "#553b27", label: "system / tokens" },
+      { color: "#253d55", label: "system / components" },
+    ],
+  },
 ];
-export default function Gallery() { const [selected, setSelected] = useState<Item | null>(null); const [index, setIndex] = useState(0); function open(item: Item) { setSelected(item); setIndex(0); } function move(step: number) { if (!selected) return; setIndex((current) => (current + step + selected.images.length) % selected.images.length); } useEffect(() => { function onKey(event: KeyboardEvent) { if (!selected) return; if (event.key === "ArrowLeft") move(-1); if (event.key === "ArrowRight") move(1); if (event.key === "Escape") setSelected(null); } window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey); }); return <><div className="gallery-grid">{items.map((item) => <button className="gallery-item" key={item.title} onClick={() => open(item)}><div className="gallery-placeholder" style={{ background: `linear-gradient(135deg, ${item.images[0].color}, #181818)` }}><span>{item.images[0].label}</span><b>{item.images.length} images</b><i /></div><strong>{item.title}</strong><small>{item.description}</small></button>)}</div>{selected && <div className="gallery-modal-backdrop" role="presentation" onClick={() => setSelected(null)}><div className="gallery-modal" role="dialog" aria-modal="true" onClick={(event) => event.stopPropagation()}><button className="gallery-modal-close" onClick={() => setSelected(null)} aria-label="Close">×</button><button className="gallery-arrow gallery-arrow-left" onClick={() => move(-1)} aria-label="Previous image">‹</button><div className="gallery-modal-image" style={{ background: `linear-gradient(135deg, ${selected.images[index].color}, #181818)` }}><span>{selected.images[index].label}</span><i /></div><button className="gallery-arrow gallery-arrow-right" onClick={() => move(1)} aria-label="Next image">›</button><div className="gallery-counter">{index + 1} / {selected.images.length}</div><h2>{selected.title}</h2><p>{selected.description}</p></div></div>}</>; }
+export default function Gallery() {
+  const [selected, setSelected] = useState<Item | null>(null);
+  const [index, setIndex] = useState(0);
+  function open(item: Item) {
+    setSelected(item);
+    setIndex(0);
+  }
+  function move(step: number) {
+    if (!selected) return;
+    setIndex(
+      (current) =>
+        (current + step + selected.images.length) % selected.images.length,
+    );
+  }
+  useEffect(() => {
+    function onKey(event: KeyboardEvent) {
+      if (!selected) return;
+      if (event.key === "ArrowLeft") move(-1);
+      if (event.key === "ArrowRight") move(1);
+      if (event.key === "Escape") setSelected(null);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+  return (
+    <>
+      <div className="gallery-grid">
+        {items.map((item) => (
+          <button
+            className="gallery-item"
+            key={item.title}
+            onClick={() => open(item)}
+          >
+            <div
+              className="gallery-placeholder"
+              style={{
+                background: `linear-gradient(135deg, ${item.images[0].color}, #181818)`,
+              }}
+            >
+              <span>{item.images[0].label}</span>
+              <b>{item.images.length} images</b>
+              <i />
+            </div>
+            <strong>{item.title}</strong>
+            <small>{item.description}</small>
+          </button>
+        ))}
+      </div>
+      {selected && (
+        <div
+          className="gallery-modal-backdrop"
+          role="presentation"
+          onClick={() => setSelected(null)}
+        >
+          <div
+            className="gallery-modal"
+            role="dialog"
+            aria-modal="true"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              className="gallery-modal-close"
+              onClick={() => setSelected(null)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <button
+              className="gallery-arrow gallery-arrow-left"
+              onClick={() => move(-1)}
+              aria-label="Previous image"
+            >
+              ‹
+            </button>
+            <div
+              className="gallery-modal-image"
+              style={{
+                background: `linear-gradient(135deg, ${selected.images[index].color}, #181818)`,
+              }}
+            >
+              <span>{selected.images[index].label}</span>
+              <i />
+            </div>
+            <button
+              className="gallery-arrow gallery-arrow-right"
+              onClick={() => move(1)}
+              aria-label="Next image"
+            >
+              ›
+            </button>
+            <div className="gallery-counter">
+              {index + 1} / {selected.images.length}
+            </div>
+            <h2>{selected.title}</h2>
+            <p>{selected.description}</p>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

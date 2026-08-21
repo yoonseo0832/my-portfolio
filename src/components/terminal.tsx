@@ -60,7 +60,12 @@ export default function Terminal() {
     const startY = event.clientY;
     const startHeight = height;
     const move = (moveEvent: PointerEvent) => {
-      setHeight(Math.min(520, Math.max(110, startHeight - (moveEvent.clientY - startY))));
+      setHeight(
+        Math.min(
+          520,
+          Math.max(110, startHeight - (moveEvent.clientY - startY)),
+        ),
+      );
     };
     const stop = () => {
       window.removeEventListener("pointermove", move);
@@ -85,7 +90,11 @@ export default function Terminal() {
       style={{ height, flexBasis: height }}
       onClick={() => inputRef.current?.focus()}
     >
-      <div className="terminal-resize-handle" onPointerDown={startResize} title="Drag to resize terminal" />
+      <div
+        className="terminal-resize-handle"
+        onPointerDown={startResize}
+        title="Drag to resize terminal"
+      />
       <div className="terminal-header">
         <span>TERMINAL</span>
         <span>zsh</span>

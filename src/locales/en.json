@@ -1,1 +1,24 @@
-{"common":{"explorer":"EXPLORER","portfolio":"PORTFOLIO","about":"About","projects":"Projects","blog":"Blog","contact":"Contact","switchToEnglish":"Switch to English","switchToKorean":"한국어로 변경"},"terminal":{"welcome":"Welcome to yoonseo-portfolio terminal.","helpHint":"Type '/help' to see available commands.","available":"Available commands:","opening":"Opening...","notFound":"Command not found. Type '/help' for available commands."},"pages":{"projectsDescription":"A collection of things I've built, explored, and shipped.","blogDescription":"Notes on frontend, design, and the web.","contactDescription":"Feel free to reach out about a project or collaboration."}}
+{
+  "common": {
+    "explorer": "EXPLORER",
+    "portfolio": "PORTFOLIO",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact",
+    "switchToEnglish": "Switch to English",
+    "switchToKorean": "한국어로 변경"
+  },
+  "terminal": {
+    "welcome": "Welcome to yoonseo-portfolio terminal.",
+    "helpHint": "Type '/help' to see available commands.",
+    "available": "Available commands:",
+    "opening": "Opening...",
+    "notFound": "Command not found. Type '/help' for available commands."
+  },
+  "pages": {
+    "projectsDescription": "A collection of things I've built, explored, and shipped.",
+    "blogDescription": "Notes on frontend, design, and the web.",
+    "contactDescription": "Feel free to reach out about a project or collaboration."
+  }
+}

@@ -46,7 +46,11 @@ const currentFocus = ["accessible UI", "design systems", "web performance"];
 export async function getAboutMarkdown() {
   try {
     const { getSupabase } = await import("@/lib/supabase");
-    const { data } = await getSupabase().from("site_content").select("content").eq("key", "about").maybeSingle();
+    const { data } = await getSupabase()
+      .from("site_content")
+      .select("content")
+      .eq("key", "about")
+      .maybeSingle();
     return data?.content || aboutMarkdown;
   } catch {
     return aboutMarkdown;
@@ -55,5 +59,10 @@ export async function getAboutMarkdown() {
 
 export default async function AboutMarkdown() {
   const content = await getAboutMarkdown();
-  return <div className="markdown-content"><p className="syntax-comment">{'// latest-intro.myself'}</p><ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown></div>;
+  return (
+    <div className="markdown-content">
+      <p className="syntax-comment">{"// latest-intro.myself"}</p>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+    </div>
+  );
 }

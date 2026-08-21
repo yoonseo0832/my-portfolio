@@ -36,7 +36,13 @@ const files: SidebarFile[] = [
     icon: "{}",
     color: "#cbcb41",
   },
-  { name: "gallery.assets", href: "/gallery", key: "gallery", icon: "▧", color: "#c586c0" },
+  {
+    name: "gallery.assets",
+    href: "/gallery",
+    key: "gallery",
+    icon: "▧",
+    color: "#c586c0",
+  },
   {
     name: "tistory.rss",
     href: "/blog",
@@ -74,8 +80,25 @@ export default function VSCodeLayout({
   const pathname = usePathname();
   const { locale, toggleLocale, t } = useTranslation();
   const { isAdmin } = useAuthStore();
-  const sidebarFiles = [...files, ...(isAdmin ? [{ name: "dev-notes.md", href: "/dev-notes", icon: "#", color: "#dcdcaa" }] : [])];
-  const current = sidebarFiles.find((file) => file.href === pathname) ?? (pathname.startsWith("/dev-notes/") ? sidebarFiles.find((file) => file.href === "/dev-notes") : undefined) ?? files[0];
+  const sidebarFiles = [
+    ...files,
+    ...(isAdmin
+      ? [
+          {
+            name: "dev-notes.md",
+            href: "/dev-notes",
+            icon: "#",
+            color: "#dcdcaa",
+          },
+        ]
+      : []),
+  ];
+  const current =
+    sidebarFiles.find((file) => file.href === pathname) ??
+    (pathname.startsWith("/dev-notes/")
+      ? sidebarFiles.find((file) => file.href === "/dev-notes")
+      : undefined) ??
+    files[0];
   function openExternal(file: SidebarFile) {
     if (file.url) window.open(file.url, "_blank", "noopener,noreferrer");
   }

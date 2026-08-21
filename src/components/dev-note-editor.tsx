@@ -3,4 +3,84 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 type Note = { id?: string; slug: string; title: string; content: string };
-export default function DevNoteEditor({ slug }: { slug?: string }) { const router = useRouter(); const [form, setForm] = useState<Note>({ slug: "", title: "", content: "" }); const [error, setError] = useState(""); useEffect(() => { if (slug) fetch("/api/dev-notes", { cache: "no-store" }).then(r => r.json()).then(rows => { const note = rows.find((x: Note) => x.slug === slug); if (note) setForm(note); }); }, [slug]); async function save(e: React.FormEvent) { e.preventDefault(); const response = await fetch(slug ? "/api/admin/dev-notes" : "/api/admin/dev-notes", { method: slug ? "PATCH" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(slug ? form : { title: form.title, slug: form.slug, content: form.content }) }); if (!response.ok) { setError((await response.json().catch(() => ({}))).error ?? "저장하지 못했습니다."); return; } const saved = await response.json(); router.push(`/dev-notes/${saved.slug}`); router.refresh(); } return <section className="projects-page dev-note-editor"><Link href="/dev-notes" className="back-link">← Dev Notes</Link><div className="projects-heading"><p className="eyebrow">/ workspace / notes / {slug ? "edit" : "new"}</p><h1>{slug ? "노트 수정" : "노트 작성"}</h1></div><form onSubmit={save} className="dev-note-form"><input value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="노트 제목" required /><input value={form.slug} disabled={Boolean(slug)} onChange={e => setForm({...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-")})} placeholder="파일명 (예: roadmap-2026)" required /><textarea value={form.content} onChange={e => setForm({...form, content: e.target.value})} placeholder="# 개발 노트\n\nMarkdown으로 작성하세요." required />{error && <p className="form-error">{error}</p>}<div className="dev-note-form-actions"><button type="submit">저장</button><Link href="/dev-notes">취소</Link></div></form></section>; }
+export default function DevNoteEditor({ slug }: { slug?: string }) {
+  const router = useRouter();
+  const [form, setForm] = useState<Note>({ slug: "", title: "", content: "" });
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (slug)
+      fetch("/api/dev-notes", { cache: "no-store" })
+        .then((r) => r.json())
+        .then((rows) => {
+          const note = rows.find((x: Note) => x.slug === slug);
+          if (note) setForm(note);
+        });
+  }, [slug]);
+  async function save(e: React.FormEvent) {
+    e.preventDefault();
+    const response = await fetch(
+      slug ? "/api/admin/dev-notes" : "/api/admin/dev-notes",
+      {
+        method: slug ? "PATCH" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(
+          slug
+            ? form
+            : { title: form.title, slug: form.slug, content: form.content },
+        ),
+      },
+    );
+    if (!response.ok) {
+      setError(
+        (await response.json().catch(() => ({}))).error ??
+          "저장하지 못했습니다.",
+      );
+      return;
+    }
+    const saved = await response.json();
+    router.push(`/dev-notes/${saved.slug}`);
+    router.refresh();
+  }
+  return (
+    <section className="projects-page dev-note-editor">
+      <Link href="/dev-notes" className="back-link">
+        ← Dev Notes
+      </Link>
+      <div className="projects-heading">
+        <p className="eyebrow">/ workspace / notes / {slug ? "edit" : "new"}</p>
+        <h1>{slug ? "노트 수정" : "노트 작성"}</h1>
+      </div>
+      <form onSubmit={save} className="dev-note-form">
+        <input
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          placeholder="노트 제목"
+          required
+        />
+        <input
+          value={form.slug}
+          disabled={Boolean(slug)}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-"),
+            })
+          }
+          placeholder="파일명 (예: roadmap-2026)"
+          required
+        />
+        <textarea
+          value={form.content}
+          onChange={(e) => setForm({ ...form, content: e.target.value })}
+          placeholder="# 개발 노트\n\nMarkdown으로 작성하세요."
+          required
+        />
+        {error && <p className="form-error">{error}</p>}
+        <div className="dev-note-form-actions">
+          <button type="submit">저장</button>
+          <Link href="/dev-notes">취소</Link>
+        </div>
+      </form>
+    </section>
+  );
+}
