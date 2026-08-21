@@ -18,3 +18,15 @@ create table if not exists public.site_content (
 alter table public.site_content enable row level security;
 create policy "Public site content readable" on public.site_content for select using (true);
 create policy "Server-managed site content writes" on public.site_content for all using (true) with check (true);
+
+create table if not exists public.dev_notes (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  title text not null,
+  content text not null default '',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+alter table public.dev_notes enable row level security;
+create policy "Public dev notes are readable" on public.dev_notes for select using (true);
+create policy "Server-managed dev note writes" on public.dev_notes for all using (true) with check (true);

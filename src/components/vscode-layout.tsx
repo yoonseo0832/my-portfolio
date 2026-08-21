@@ -17,6 +17,7 @@ import {
 import AccountControl from "@/components/account-control";
 import Terminal from "@/components/terminal";
 import { useTranslation } from "@/context/LanguageContext";
+import { useAuthStore } from "@/store/useAuthStore";
 type SidebarFile = {
   name: string;
   href?: string;
@@ -71,8 +72,10 @@ export default function VSCodeLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const current = files.find((file) => file.href === pathname) ?? files[0];
   const { locale, toggleLocale, t } = useTranslation();
+  const { isAdmin } = useAuthStore();
+  const sidebarFiles = [...files, ...(isAdmin ? [{ name: "dev-notes.md", href: "/dev-notes", icon: "#", color: "#dcdcaa" }] : [])];
+  const current = sidebarFiles.find((file) => file.href === pathname) ?? (pathname.startsWith("/dev-notes/") ? sidebarFiles.find((file) => file.href === "/dev-notes") : undefined) ?? files[0];
   function openExternal(file: SidebarFile) {
     if (file.url) window.open(file.url, "_blank", "noopener,noreferrer");
   }
@@ -118,7 +121,7 @@ export default function VSCodeLayout({
           <span className="chevron">⌄</span> {t("common.portfolio")}
         </div>
         <nav className="file-tree">
-          {files.map((file) =>
+          {sidebarFiles.map((file) =>
             file.isExternal ? (
               <button
                 key={file.name}
