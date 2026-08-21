@@ -18,7 +18,7 @@ export default function Terminal() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [command, setCommand] = useState("");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [height, setHeight] = useState(180);
   const [history, setHistory] = useState([
     "Welcome to yoonseo-portfolio terminal.",

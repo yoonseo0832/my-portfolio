@@ -948,6 +948,17 @@
   color: #dcdcaa;
   font-family: var(--font-geist-mono), Consolas, monospace;
 }
+.markdown-content :not(pre) > code {
+  display: inline-block;
+  margin: 2px 4px 2px 0;
+  padding: 3px 9px;
+  border: 1px solid #569cd6;
+  border-radius: 999px;
+  background: #1f2933;
+  color: #9cdcfe;
+  font-size: .9em;
+  line-height: 1.35;
+}
 .markdown-content pre code {
   color: inherit;
 }
