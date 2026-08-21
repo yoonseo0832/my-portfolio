@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function proxy(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   if (
     (request.nextUrl.pathname.startsWith("/admin") ||
       request.nextUrl.pathname.startsWith("/dev-notes")) &&
@@ -10,4 +10,4 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   return NextResponse.next();
 }
-export const config = { matcher: ["/admin/:path*"] };
+export const config = { matcher: ["/admin/:path*", "/dev-notes/:path*"] };
