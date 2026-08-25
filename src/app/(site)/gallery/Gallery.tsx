@@ -1,8 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
-type ImageItem = { color: string; label: string };
+import Image from "next/image";
+type ImageItem = { color?: string; label: string; src?: string };
 type Item = { title: string; description: string; images: ImageItem[] };
 const items: Item[] = [
+  {
+    title: "Trip at Five",
+    description:
+      "A travel service interface with clear trip discovery and planning experiences.",
+    images: [
+      { src: "/gallery/trip-at-five/trip-at-five-01.png", label: "trip-at-five / 01" },
+      { src: "/gallery/trip-at-five/trip-at-five-02.png", label: "trip-at-five / 02" },
+      { src: "/gallery/trip-at-five/trip-at-five-03.jpg", label: "trip-at-five / 03" },
+      { src: "/gallery/trip-at-five/trip-at-five-04.png", label: "trip-at-five / 04" },
+      { src: "/gallery/trip-at-five/trip-at-five-05.png", label: "trip-at-five / 05" },
+      { src: "/gallery/trip-at-five/trip-at-five-06.png", label: "trip-at-five / 06" },
+    ],
+  },
   {
     title: "VS Code Portfolio",
     description:
@@ -78,12 +92,12 @@ export default function Gallery() {
             <div
               className="gallery-placeholder"
               style={{
-                background: `linear-gradient(135deg, ${item.images[0].color}, #181818)`,
+                background: item.images[0].color ? `linear-gradient(135deg, ${item.images[0].color}, #181818)` : "#181818",
               }}
             >
-              <span>{item.images[0].label}</span>
+              {item.images[0].src ? <Image src={item.images[0].src} alt={`${item.title} preview`} fill sizes="(max-width: 560px) 100vw, (max-width: 850px) 50vw, 33vw" className="gallery-real-image" /> : <span>{item.images[0].label}</span>}
               <b>{item.images.length} images</b>
-              <i />
+              {!item.images[0].src && <i />}
             </div>
             <strong>{item.title}</strong>
             <small>{item.description}</small>
@@ -119,11 +133,10 @@ export default function Gallery() {
             <div
               className="gallery-modal-image"
               style={{
-                background: `linear-gradient(135deg, ${selected.images[index].color}, #181818)`,
+                background: selected.images[index].color ? `linear-gradient(135deg, ${selected.images[index].color}, #181818)` : "#181818",
               }}
             >
-              <span>{selected.images[index].label}</span>
-              <i />
+              {selected.images[index].src ? <Image src={selected.images[index].src} alt={selected.images[index].label} fill sizes="(max-width: 560px) calc(100vw - 48px), 860px" className="gallery-real-image gallery-real-image-detail" /> : <><span>{selected.images[index].label}</span><i /></>}
             </div>
             <button
               className="gallery-arrow gallery-arrow-right"

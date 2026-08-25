@@ -21,7 +21,7 @@ async function getPosts(): Promise<Post[]> {
   const host = requestHeaders.get("host") ?? "localhost:3000";
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   const response = await fetch(`${protocol}://${host}/api/tistory`, {
-    next: { revalidate: 3600 },
+    cache: "no-store",
   });
   if (!response.ok) throw new Error("RSS feed unavailable");
   return response.json();

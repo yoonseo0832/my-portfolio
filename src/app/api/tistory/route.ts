@@ -23,7 +23,9 @@ export async function GET() {
         Accept:
           "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       },
-      next: { revalidate: 3600 },
+      // Tistory category changes should be visible without waiting for the
+      // previous one-hour RSS response to expire.
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -34,7 +36,17 @@ export async function GET() {
     const parser = new Parser<Record<string, never>, TistoryItem>();
     const feed = await parser.parseString(xml);
 
-    return NextResponse.json(feed.items);
+    // Tistory omits `category` when a post has no categories. Normalize the
+    // response so the UI can safely render every item.
+    const posts = feed.items.map((item) => ({
+      title: item.title ?? "Untitled post",
+      link: item.link ?? rssUrl,
+      pubDate: item.pubDate ?? "",
+      contentSnippet: item.contentSnippet ?? "",
+      categories: item.categories ?? [],
+    }));
+
+    return NextResponse.json(posts);
   } catch (error) {
     console.error("Tistory RSS error", error);
     return NextResponse.json(
