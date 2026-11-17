@@ -18,41 +18,16 @@ const items: Item[] = [
     ],
   },
   {
-    title: "VS Code Portfolio",
+    title: "Internship next.js frontend dashboard",
     description:
-      "A developer portfolio interface inspired by a familiar editor workspace.",
+      "During my summer break internship, I built a test dashboard using Next.js for a software program developed by one of our outsourcing vendors.",
     images: [
-      { color: "#163c52", label: "portfolio / overview" },
-      { color: "#244b3b", label: "portfolio / projects" },
-      { color: "#3d2e55", label: "portfolio / admin" },
-      { color: "#553b27", label: "portfolio / gallery" },
-      { color: "#4a293f", label: "portfolio / mobile" },
-    ],
-  },
-  {
-    title: "Project Dashboard",
-    description:
-      "A clean project management experience for organizing shipped work.",
-    images: [
-      { color: "#3d2e55", label: "dashboard / overview" },
-      { color: "#553b27", label: "dashboard / detail" },
-    ],
-  },
-  {
-    title: "Mobile Interface",
-    description:
-      "An accessible mobile-first interface focused on clear interactions.",
-    images: [
-      { color: "#244b3b", label: "mobile-ui / home" },
-      { color: "#4a293f", label: "mobile-ui / profile" },
-    ],
-  },
-  {
-    title: "Design System",
-    description: "Reusable components, tokens, and layout experiments.",
-    images: [
-      { color: "#553b27", label: "system / tokens" },
-      { color: "#253d55", label: "system / components" },
+      { src: "/gallery/internship-next-frontend/internship-next-frontend-01.png", label: "internship-next-frontend / 01" },
+      { src: "/gallery/internship-next-frontend/internship-next-frontend-02.png", label: "internship-next-frontend / 02" },
+      { src: "/gallery/internship-next-frontend/internship-next-frontend-03.jpg", label: "internship-next-frontend / 03" },
+      { src: "/gallery/internship-next-frontend/internship-next-frontend-04.png", label: "internship-next-frontend / 04" },
+      { src: "/gallery/internship-next-frontend/internship-next-frontend-05.png", label: "internship-next-frontend / 05" },
+      { src: "/gallery/internship-next-frontend/internship-next-frontend-06.png", label: "internship-next-frontend / 06" },
     ],
   },
 ];
