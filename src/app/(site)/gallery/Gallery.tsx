@@ -24,7 +24,7 @@ const items: Item[] = [
     images: [
       { src: "/gallery/internship-next-frontend/internship-next-frontend-01.png", label: "internship-next-frontend / 01" },
       { src: "/gallery/internship-next-frontend/internship-next-frontend-02.png", label: "internship-next-frontend / 02" },
-      { src: "/gallery/internship-next-frontend/internship-next-frontend-03.jpg", label: "internship-next-frontend / 03" },
+      { src: "/gallery/internship-next-frontend/internship-next-frontend-03.png", label: "internship-next-frontend / 03" },
       { src: "/gallery/internship-next-frontend/internship-next-frontend-04.png", label: "internship-next-frontend / 04" },
       { src: "/gallery/internship-next-frontend/internship-next-frontend-05.png", label: "internship-next-frontend / 05" },
       { src: "/gallery/internship-next-frontend/internship-next-frontend-06.png", label: "internship-next-frontend / 06" },
